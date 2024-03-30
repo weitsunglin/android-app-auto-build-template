@@ -1,5 +1,5 @@
 # android-app-template
-for learning android app using kotlin
+1. Get photos from albums 
 
 ![koltin_cpu](https://github.com/weitsunglin/android-app-template/blob/main/koltin%20to%20cpu.jpg)
 
