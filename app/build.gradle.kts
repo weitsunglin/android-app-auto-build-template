@@ -66,4 +66,14 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose:2.1.0")
     implementation("androidx.activity:activity-compose:<latest_version>") // Replace <latest_version> with the actual version
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
+    implementation("com.squareup.okhttp3:okhttp:4.9.1")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
+
+    implementation ("androidx.compose.material:material:<version>")
+    implementation ("io.coil-kt:coil-compose:<version>")
+
+    implementation ("androidx.compose.ui:ui:<latest_version>")
 }
