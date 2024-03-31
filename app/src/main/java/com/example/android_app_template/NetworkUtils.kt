@@ -7,10 +7,10 @@ import okhttp3.Request
 import okhttp3.Response
 
 class NetworkUtils {
+
     private val client = OkHttpClient()
 
-    // 将方法名从 makeNetworkRequest 改为 httpRequest
-    suspend fun httpRequest(url: String): String {
+    suspend fun httpRequestWithokhttp3(url: String): String {
         val request = Request.Builder()
             .url(url)
             .build()

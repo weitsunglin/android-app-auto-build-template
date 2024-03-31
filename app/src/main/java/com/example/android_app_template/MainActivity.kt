@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     GalleryImagePicker()
-                    NetworkTestButton()
+                    NetworkTestokhttp3Button()
                 }
             }
         }
@@ -77,7 +77,7 @@ fun GalleryImagePicker() {
 }
 
 @Composable
-fun NetworkTestButton() {
+fun NetworkTestokhttp3Button() {
     val coroutineScope = rememberCoroutineScope()
 
     // 使用Box容器来指定按钮的大小並使其居中
@@ -94,13 +94,13 @@ fun NetworkTestButton() {
                     // 確保 NetworkUtils 實例被正確初始化或引用
                     val networkUtils = NetworkUtils() // 假設你有這樣一個實例
                     val response = withContext(Dispatchers.IO) {
-                        networkUtils.httpRequest("https://openapi.twse.com.tw/v1/opendata/t187ap14_L")
+                        networkUtils.httpRequestWithokhttp3("https://openapi.twse.com.tw/v1/opendata/t187ap14_L")
                     }
                     println(response.toString()) // 確保調用 toString() 以避免歧義
                 }
             }
         ) {
-            Text("獲取數據")
+            Text("okhttp3")
         }
     }
 }
