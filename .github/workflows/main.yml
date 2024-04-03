@@ -1,4 +1,4 @@
-name: Build APK or AAB
+name: Build APK or AAB with Logs
 
 on:
   workflow_dispatch:
@@ -36,12 +36,12 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x ./gradlew
 
-    - name: Build APK or AAB
+    - name: Build APK or AAB and Capture Logs
       run: |
         if [ "${{ github.event.inputs.outputType }}" == ".apk" ]; then
-          ./gradlew assemble${{ github.event.inputs.buildType }}
+          ./gradlew assemble${{ github.event.inputs.buildType }} --info > build.log 2>&1
         else
-          ./gradlew bundle${{ github.event.inputs.buildType }} 
+          ./gradlew bundle${{ github.event.inputs.buildType }} --info > build.log 2>&1
         fi
 
     - name: Upload APK or AAB
@@ -51,3 +51,9 @@ jobs:
         path: |
           app/build/outputs/apk/${{ github.event.inputs.buildType }}/*.apk
           app/build/outputs/bundle/${{ github.event.inputs.buildType }}/*.aab
+
+    - name: Upload Build Logs
+      uses: actions/upload-artifact@v2
+      with:
+        name: build-logs
+        path: build.log
