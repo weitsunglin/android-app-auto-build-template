@@ -63,14 +63,13 @@ jobs:
       with:
         server_address: smtp.gmail.com
         server_port: 587
-        # 使用TLS
         secure: false
-        # 使用你在GitHub Secrets中设置的邮箱用户名和密码
-        username: ${{ secrets.GMAIL_USER }}
-        password: ${{ secrets.GMAIL_PASS }}
+        username: ${{ secrets.GMAIL_USER }} # 使用GitHub Secrets保护你的用户名
+        password: ${{ secrets.GMAIL_PASS }} # 使用GitHub Secrets保护你的密码
+        from: ${{ secrets.GMAIL_USER }} # 指定发件人邮箱地址
+        to: wilson.lwt.tw@gmail.com
         subject: Build Artifacts and Logs
         body: Here are the build artifacts and logs.
-        to: wilson.lwt.tw@gmail.com
-        # 根据你的实际输出调整文件路径
-        attachments: app/build/outputs/apk/${{ github.event.inputs.buildType }}/*.apk, app/build/outputs/bundle/${{ github.event.inputs.buildType }}/*.aab, build.log
+        attachments: app/build/outputs/apk/debug/*.apk, app/build/outputs/bundle/debug/*.aab, build.log
+
 
