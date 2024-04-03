@@ -1,4 +1,4 @@
-name: Build APK
+name: Build APK or AAB
 
 on:
   workflow_dispatch:
@@ -11,6 +11,14 @@ on:
         options:
           - debug
           - release
+      outputType:
+        description: 'Output type (.apk or .aab)'
+        required: true
+        default: '.apk'
+        type: choice
+        options:
+          - '.apk'
+          - '.aab'
 
 jobs:
   build:
@@ -24,15 +32,22 @@ jobs:
       with:
         java-version: '17'
         distribution: 'adopt'
-
+    
     - name: Grant execute permission for gradlew
       run: chmod +x ./gradlew
 
-    - name: Build APK
-      run: ./gradlew assemble${{ github.event.inputs.buildType }}
+    - name: Build APK or AAB
+      run: |
+        if [ "${{ github.event.inputs.outputType }}" == ".apk" ]; then
+          ./gradlew assemble${{ github.event.inputs.buildType }}
+        else
+          ./gradlew bundle${{ github.event.inputs.buildType }} 
+        fi
 
-    - name: Upload APK
+    - name: Upload APK or AAB
       uses: actions/upload-artifact@v2
       with:
-        name: apk-${{ github.event.inputs.buildType }}
-        path: app/build/outputs/apk/${{ github.event.inputs.buildType }}/*.apk
+        name: output-${{ github.event.inputs.buildType }}
+        path: |
+          app/build/outputs/apk/${{ github.event.inputs.buildType }}/*.apk
+          app/build/outputs/bundle/${{ github.event.inputs.buildType }}/*.aab
