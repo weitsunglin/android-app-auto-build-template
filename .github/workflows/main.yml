@@ -1,10 +1,12 @@
-name: Android Build
+name: Build APK
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      buildType:
+        description: 'Build type (debug or release)'
+        required: true
+        default: 'debug'
 
 jobs:
   build:
@@ -18,15 +20,16 @@ jobs:
       with:
         java-version: '17'
         distribution: 'adopt'
-
+      
     - name: Grant execute permission for gradlew
       run: chmod +x ./gradlew
 
     - name: Build APK
-      run: ./gradlew assembleDebug
+      run: ./gradlew assemble${{ github.event.inputs.buildType }}
 
     - name: Upload APK
       uses: actions/upload-artifact@v2
       with:
-        name: apk
-        path: app/build/outputs/apk/debug/app-debug.apk
+        name: apk-${{ github.event.inputs.buildType }}
+        path: |
+          app/build/outputs/apk/${{ github.event.inputs.buildType }}/app-${{ github.event.inputs.buildType }}.apk
