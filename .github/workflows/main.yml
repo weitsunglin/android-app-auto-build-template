@@ -43,22 +43,22 @@ jobs:
         else
           ./gradlew bundle${{ github.event.inputs.buildType }} --info > build.log 2>&1
         fi
+    
+    - name: Zip APK or AAB and Logs
+      run: |
+        if [ "${{ github.event.inputs.outputType }}" == ".apk" ]; then
+          zip -r build-package.zip build.log app/build/outputs/apk/${{ github.event.inputs.buildType }}/
+        else
+          zip -r build-package.zip build.log app/build/outputs/bundle/${{ github.event.inputs.buildType }}/
+        fi
 
-    - name: Upload APK or AAB
+    - name: Upload Build Package
       uses: actions/upload-artifact@v2
       with:
-        name: output-${{ github.event.inputs.buildType }}
-        path: |
-          app/build/outputs/apk/${{ github.event.inputs.buildType }}/*.apk
-          app/build/outputs/bundle/${{ github.event.inputs.buildType }}/*.aab
+        name: build-package-${{ github.event.inputs.buildType }}
+        path: build-package.zip
 
-    - name: Upload Build Logs
-      uses: actions/upload-artifact@v2
-      with:
-        name: build-logs
-        path: build.log
-
-    - name: Send Email with Build Artifact and Logs
+    - name: Send Email with Build Package
       uses: dawidd6/action-send-mail@v3
       with:
         server_address: smtp.gmail.com
@@ -69,7 +69,5 @@ jobs:
         from: ${{ secrets.GMAIL_USER }} # 指定发件人邮箱地址
         to: wilson.lwt.tw@gmail.com
         subject: Build Artifacts and Logs
-        body: Here are the build artifacts and logs.
-        attachments: build.log
-
-
+        body: Attached is the build package including the APK or AAB and build logs.
+        attachments: build-package.zip
