@@ -70,6 +70,6 @@ jobs:
         to: wilson.lwt.tw@gmail.com
         subject: Build Artifacts and Logs
         body: Here are the build artifacts and logs.
-        attachments: app/build/outputs/apk/debug/*.apk, app/build/outputs/bundle/debug/*.aab, build.log
+        attachments: build.log
 
 
