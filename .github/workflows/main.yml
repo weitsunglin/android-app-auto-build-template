@@ -57,3 +57,20 @@ jobs:
       with:
         name: build-logs
         path: build.log
+
+    - name: Send Email with Build Artifact and Logs
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 587
+        # 使用TLS
+        secure: false
+        # 使用你在GitHub Secrets中设置的邮箱用户名和密码
+        username: ${{ secrets.GMAIL_USER }}
+        password: ${{ secrets.GMAIL_PASS }}
+        subject: Build Artifacts and Logs
+        body: Here are the build artifacts and logs.
+        to: wilson.lwt.tw@gmail.com
+        # 根据你的实际输出调整文件路径
+        attachments: app/build/outputs/apk/${{ github.event.inputs.buildType }}/*.apk, app/build/outputs/bundle/${{ github.event.inputs.buildType }}/*.aab, build.log
+
