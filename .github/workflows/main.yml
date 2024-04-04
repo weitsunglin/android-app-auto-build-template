@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       buildType:
-        description: 'Build type (debug or release)'
+        description: 'Build type (debug or Release)'
         required: true
         default: 'debug'
         type: choice
