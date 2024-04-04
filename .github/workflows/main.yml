@@ -44,13 +44,9 @@ jobs:
           ./gradlew bundle${{ github.event.inputs.buildType }} --info > build.log 2>&1
         fi
     
-    - name: Zip APK or AAB and Logs
+    - name: Zip APK Logs
       run: |
-        if [ "${{ github.event.inputs.outputType }}" == ".apk" ]; then
-          zip -r build-package.zip build.log app/build/outputs/apk/${{ github.event.inputs.buildType }}/
-        else
-          zip -r build-package.zip build.log app/build/outputs/bundle/${{ github.event.inputs.buildType }}/
-        fi
+        zip -r build-package.zip build.log
 
     - name: Upload Build Package
       uses: actions/upload-artifact@v2
