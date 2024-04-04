@@ -43,27 +43,29 @@ jobs:
         else
           ./gradlew bundle${{ github.event.inputs.buildType }} --info > build.log 2>&1
         fi
-    
-    - name: Zip APK Logs
-      run: |
-        zip -r build-package.zip build.log
-
-    - name: Upload Build Package
+    - name: Upload APK or AAB
       uses: actions/upload-artifact@v2
       with:
-        name: build-package-${{ github.event.inputs.buildType }}
-        path: build-package.zip
-
-    - name: Send Email with Build Package
-      uses: dawidd6/action-send-mail@v3
+        name: output-${{ github.event.inputs.buildType }}
+        path: |
+          app/build/outputs/apk/${{ github.event.inputs.buildType }}/*.apk
+          app/build/outputs/bundle/${{ github.event.inputs.buildType }}/*.aab
+    - name: Upload Build Logs
+      uses: actions/upload-artifact@v2
       with:
-        server_address: smtp.gmail.com
-        server_port: 587
-        secure: false
-        username: ${{ secrets.GMAIL_USER }} # 使用GitHub Secrets保护你的用户名
-        password: ${{ secrets.GMAIL_PASS }} # 使用GitHub Secrets保护你的密码
-        from: ${{ secrets.GMAIL_USER }} # 指定发件人邮箱地址
-        to: wilson.lwt.tw@gmail.com
-        subject: Build Artifacts and Logs
-        body: Attached is the build package including the APK or AAB and build logs.
-        attachments: build-package.zip
+        name: build-logs
+        path: build.log
+
+    #- name: Send Email with Build Package
+      #uses: dawidd6/action-send-mail@v3
+      #with:
+        #server_address: smtp.gmail.com
+        #server_port: 587
+        #secure: false
+        #username: ${{ secrets.GMAIL_USER }} # 使用GitHub Secrets保护你的用户名
+        #password: ${{ secrets.GMAIL_PASS }} # 使用GitHub Secrets保护你的密码
+        #from: ${{ secrets.GMAIL_USER }} # 指定发件人邮箱地址
+        #to: wilson.lwt.tw@gmail.com
+        #subject: Build Artifacts and Logs
+        #body: Attached is the build package including the APK or AAB and build logs.
+        #attachments: build.log
