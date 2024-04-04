@@ -4,13 +4,13 @@ on:
   workflow_dispatch:
     inputs:
       buildType:
-        description: 'Build type (debug or release)'
+        description: 'Build type (debug or Release)'
         required: true
         default: 'debug'
         type: choice
         options:
           - debug
-          - release
+          - Release
       outputType:
         description: 'Output type (.apk or .aab)'
         required: true
