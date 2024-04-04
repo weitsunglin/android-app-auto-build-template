@@ -7,6 +7,15 @@ android {
     namespace = "com.example.android_app_template"
     compileSdk = 34
 
+    signingConfigs {
+        create("release") {
+            keyAlias = "key_0"
+            keyPassword = "zxas1234"
+            storeFile = file("signatures/signature.jks")
+            storePassword = "zxas1234"
+        }
+    }
+
     defaultConfig {
         applicationId = "com.example.android_app_template"
         minSdk = 24
