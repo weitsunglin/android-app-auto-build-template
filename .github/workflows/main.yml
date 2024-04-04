@@ -54,16 +54,16 @@ jobs:
         name: build-package-${{ github.event.inputs.buildType }}
         path: build-package.zip
 
-    - name: Send Email with Build Package
-      uses: dawidd6/action-send-mail@v3
-      with:
-        server_address: smtp.gmail.com
-        server_port: 587
-        secure: false
-        username: ${{ secrets.GMAIL_USER }} # 使用GitHub Secrets保护你的用户名
-        password: ${{ secrets.GMAIL_PASS }} # 使用GitHub Secrets保护你的密码
-        from: ${{ secrets.GMAIL_USER }} # 指定发件人邮箱地址
-        to: wilson.lwt.tw@gmail.com
-        subject: Build Artifacts and Logs
-        body: Attached is the build package including the APK or AAB and build logs.
-        attachments: build-package.zip
+    #- name: Send Email with Build Package
+      #uses: dawidd6/action-send-mail@v3
+      #with:
+        #server_address: smtp.gmail.com
+        #server_port: 587
+        #secure: false
+        #username: ${{ secrets.GMAIL_USER }} # 使用GitHub Secrets保护你的用户名
+        #password: ${{ secrets.GMAIL_PASS }} # 使用GitHub Secrets保护你的密码
+        #from: ${{ secrets.GMAIL_USER }} # 指定发件人邮箱地址
+        #to: wilson.lwt.tw@gmail.com
+        #subject: Build Artifacts and Logs
+        #body: Attached is the build package including the APK or AAB and build logs.
+        #attachments: build-package.zip
