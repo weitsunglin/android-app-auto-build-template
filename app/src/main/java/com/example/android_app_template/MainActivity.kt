@@ -26,6 +26,9 @@ import com.example.android_app_template.ui.theme.AndroidapptemplateTheme
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import android.app.PictureInPictureParams
+import android.os.Build
+import android.util.Rational
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,11 +41,23 @@ class MainActivity : ComponentActivity() {
                 ) {
                     GalleryImagePicker()
                     NetworkTestokhttp3Button()
+                   
                 }
             }
         }
     }
+    override fun onUserLeaveHint() {
+        super.onUserLeaveHint()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val params = PictureInPictureParams.Builder()
+                .setAspectRatio(Rational(1, 1))
+                .build()
+            enterPictureInPictureMode(params)
+        }
+    }
 }
+
+
 
 @Composable
 fun GalleryImagePicker() {
