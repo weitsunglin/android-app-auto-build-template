@@ -8,10 +8,10 @@ android {
     compileSdk = 34
 
     signingConfigs {
-        create("release") {
-            keyAlias = "key_0"
+        register("release") { // 使用register来创建新的签名配置
+            keyAlias = "key0"
             keyPassword = "zxas1234"
-            storeFile = file("signatures/signature.jks")
+            storeFile = file("signatures/signature.jks") // 确保这个路径相对于项目根目录
             storePassword = "zxas1234"
         }
     }
@@ -28,11 +28,12 @@ android {
 
     buildTypes {
         getByName("release") {
+            signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            signingConfig = signingConfigs.getByName("release")
         }
     }
+
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
