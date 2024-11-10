@@ -1,4 +1,4 @@
-# android-app-template
+# android-app-auto-build-template
 
 ## Android framework
 
